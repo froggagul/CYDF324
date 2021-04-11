@@ -31,24 +31,43 @@ class ViewPanel():
         self.btn = Tk.Button(self.framePanel, text="search")
         self.btn.pack(side='top', padx=6)
         # Event handlers passes events to controller
-        self.btn.bind("<Button>", self.controller.search) # <- model의 search function이 들어갈 곳
+        self.btn.bind("<Button>", self.controller.updateListBox) # <- model의 search function이 들어갈 곳
+
 
         self.listBox = Tk.Listbox(self.framePanel, height=0, selectmode="browse")
-        for item in self._init_listBox():
-            self.listBox.insert(Tk.END, item)
-
+        self._init_listBox()
         self.listBox.pack()
 
         # 전화번호부 추가창
-        self.phoneAddButton = Tk.Button(self.framePanel, text="전화번호 추가")
+        self.phoneAddButton = Tk.Button(self.framePanel, text="새 전화번호 추가하기")
         self.phoneAddButton.pack(side="bottom")
-        self.phoneAddButton.bind("<Button>", None)
+        self.phoneAddButton.bind("<Button>", self.controller.addPhoneAddEntry)
+
+        # frame 2
+        self.isPhoneRegisterOn = True
+        self.framePanel2 = Tk.Frame(root)
+        self.framePanel2.pack()
+        
+        self.phoneNameLabel = Tk.Label(self.framePanel2, text="이름")
+        self.phoneNameLabel.pack(side='bottom')
+
+        self.phone_name = Tk.StringVar()
+        self.entryPhoneName = Tk.Entry(self.framePanel2, textvariable=self.phone_name)
+        self.entryPhoneName.pack(side='bottom')
+
+        self.phoneNumberLabel = Tk.Label(self.framePanel2, text="전화번호")
+        self.phoneNumberLabel.pack(side='bottom')
+
+        self.phone_number = Tk.StringVar()
+        self.entryPhoneNumber = Tk.Entry(self.framePanel2, textvariable=self.phone_number)
+        self.entryPhoneNumber.pack(side='bottom')
+
+        self.phoneAddButton = Tk.Button(self.framePanel2, text="추가하기")
+        self.phoneAddButton.pack(side='bottom')
+        # Event handlers passes events to controller
+        self.phoneAddButton.bind("<Button>", self.controller.addPhone) # <- model의 search function이 들어갈 곳
 
     def _init_listBox(self):
-        with open('data.json', 'r', encoding='utf-8') as f:
-            phone_data = json.load(f)
-        result_list = []
-        for name in phone_data:
-            for phone_number in phone_data[name]:
-                result_list.append(f'{name} : {phone_number}')
-        return sorted(result_list)
+        items = self.controller.search("")
+        for item in items:
+            self.listBox.insert(Tk.END, item)
