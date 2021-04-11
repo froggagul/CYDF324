@@ -16,3 +16,15 @@ class Controller():
         self.root.geometry('300x800')
 
         self.root.mainloop()
+    
+    def search(self, event):
+        search_term = self.view.viewPanel.search_term.get()
+        try:
+            results = self.model.search(search_term)
+        except:
+            results = []
+
+        self.view.viewPanel.listBox.delete(0, Tk.END)
+
+        for result in results:
+            self.view.viewPanel.listBox.insert(Tk.END, result)
