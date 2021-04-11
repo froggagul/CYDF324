@@ -13,6 +13,6 @@ class Controller():
         # Pass to view links on root frame and controller object
         self.view = View(self.root, self)
         self.root.title("MVC example")
-        self.root.geometry('300x200')
+        self.root.geometry('300x800')
 
         self.root.mainloop()

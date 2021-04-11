@@ -22,4 +22,22 @@ class ViewPanel():
 
         self.search_term = Tk.StringVar()
         self.entry = Tk.Entry(self.framePanel, textvariable=self.search_term)
-        self.entry.pack()
+        self.entry.pack(side='top')
+
+        # 엔터키 눌러도 검색할 수 있게
+        # self.entry.bind("enter?")
+
+        self.btn = Tk.Button(self.framePanel, text="search")
+        self.btn.pack(side='top', padx=6)
+        # Event handlers passes events to controller
+        self.btn.bind("<Button>", None) # <- model의 search function이 들어갈 곳
+
+        self.listBox = Tk.Listbox(self.framePanel, height=0, selectmode="browse")       
+        self.listBox.insert(0, "정호진-01050988665")
+        self.listBox.insert(0, "정영주-01087918665")
+        self.listBox.pack()
+
+        # 전화번호부 추가창
+        self.phoneAddButton = Tk.Button(self.framePanel, text="전화번호 추가")
+        self.phoneAddButton.pack(side="bottom")
+        self.phoneAddButton.bind("<Button>", None)
