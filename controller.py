@@ -43,6 +43,9 @@ class Controller():
             self.view.viewPanel.framePanel2.pack()
         self.view.viewPanel.isPhoneRegisterOn = not self.view.viewPanel.isPhoneRegisterOn
     
-    def addPhone(self, event):
-        print(self.view.viewPanel.phone_name.get())
-        print(self.view.viewPanel.phone_number.get())
+    def addPhoneInfo(self, event):
+        name = self.view.viewPanel.phone_name.get()
+        phone_number = self.view.viewPanel.phone_number.get()
+        self.model.addPhoneInfo(name, phone_number)
+
+        self.updateListBox(event)

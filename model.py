@@ -33,3 +33,17 @@ class Model():
         # # def search_by_value(term):
 
         return sorted(result_list)
+    
+    def addPhoneInfo(self, name, phone_number):
+        with open('data.json', 'r', encoding='utf-8') as f:
+            phone_data = json.load(f)
+
+        print(name, phone_number)
+        if name in phone_data:
+            if phone_number not in phone_data[name]:
+                phone_data[name].append(phone_number)
+        else:
+            phone_data[name] = [phone_number]
+
+        with open('data.json', 'w', encoding='utf-8') as f:
+            json.dump(phone_data, f)

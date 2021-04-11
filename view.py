@@ -31,8 +31,7 @@ class ViewPanel():
         self.btn = Tk.Button(self.framePanel, text="search")
         self.btn.pack(side='top', padx=6)
         # Event handlers passes events to controller
-        self.btn.bind("<Button>", self.controller.updateListBox) # <- model의 search function이 들어갈 곳
-
+        self.btn.bind("<Button>", self.controller.updateListBox) # <- search and update list
 
         self.listBox = Tk.Listbox(self.framePanel, height=0, selectmode="browse")
         self._init_listBox()
@@ -44,9 +43,10 @@ class ViewPanel():
         self.phoneAddButton.bind("<Button>", self.controller.addPhoneAddEntry)
 
         # frame 2
-        self.isPhoneRegisterOn = True
+        self.isPhoneRegisterOn = False
         self.framePanel2 = Tk.Frame(root)
-        self.framePanel2.pack()
+        if (self.isPhoneRegisterOn):
+            self.framePanel2.pack()
         
         self.phoneNameLabel = Tk.Label(self.framePanel2, text="이름")
         self.phoneNameLabel.pack(side='bottom')
@@ -65,9 +65,11 @@ class ViewPanel():
         self.phoneAddButton = Tk.Button(self.framePanel2, text="추가하기")
         self.phoneAddButton.pack(side='bottom')
         # Event handlers passes events to controller
-        self.phoneAddButton.bind("<Button>", self.controller.addPhone) # <- model의 search function이 들어갈 곳
+        self.phoneAddButton.bind("<Button>", self.controller.addPhoneInfo) # <- add phone info
 
     def _init_listBox(self):
+        self.listBox.delete(0, Tk.END)
+
         items = self.controller.search("")
         for item in items:
             self.listBox.insert(Tk.END, item)
