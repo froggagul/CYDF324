@@ -21,7 +21,8 @@ class Controller():
         search_term = self.view.viewPanel.search_term.get()
         try:
             results = self.model.search(search_term)
-        except:
+        except Exception as e:
+            print(e)
             results = []
 
         self.view.viewPanel.listBox.delete(0, Tk.END)

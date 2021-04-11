@@ -1,5 +1,5 @@
 import tkinter as Tk
-
+import json
 
 class View():
     def __init__(self, master, controller):
@@ -33,12 +33,22 @@ class ViewPanel():
         # Event handlers passes events to controller
         self.btn.bind("<Button>", self.controller.search) # <- model의 search function이 들어갈 곳
 
-        self.listBox = Tk.Listbox(self.framePanel, height=0, selectmode="browse")       
-        self.listBox.insert(0, "정호진-01050988665")
-        self.listBox.insert(0, "정영주-01087918665")
+        self.listBox = Tk.Listbox(self.framePanel, height=0, selectmode="browse")
+        for item in self._init_listBox():
+            self.listBox.insert(Tk.END, item)
+
         self.listBox.pack()
 
         # 전화번호부 추가창
         self.phoneAddButton = Tk.Button(self.framePanel, text="전화번호 추가")
         self.phoneAddButton.pack(side="bottom")
         self.phoneAddButton.bind("<Button>", None)
+
+    def _init_listBox(self):
+        with open('data.json', 'r', encoding='utf-8') as f:
+            phone_data = json.load(f)
+        result_list = []
+        for name in phone_data:
+            for phone_number in phone_data[name]:
+                result_list.append(f'{name} : {phone_number}')
+        return sorted(result_list)

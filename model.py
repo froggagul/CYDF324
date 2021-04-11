@@ -1,5 +1,35 @@
+import json
+
 class Model():
     def __init__(self):
         pass
-    def search(self, term):
-        return ['검색결과', '이렇게', '표시됨']
+    def search(self, search_term):
+        with open('data.json', 'r', encoding='utf-8') as f:
+            phone_data = json.load(f)
+            # print(phone_data)
+
+        def does_include_term(target):
+            if search_term not in target:
+                return False
+            return True
+
+        result_dict = {}
+        for name in phone_data:
+            if does_include_term(name):
+                result_dict[name] = phone_data[name]
+            else:
+                value_search_result = list(filter(does_include_term, phone_data[name]))
+                if (len(value_search_result) > 0):
+                    result_dict[name] = value_search_result
+        
+        result_list = []
+        for name in result_dict:
+            for phone_number in result_dict[name]:
+                result_list.append(f'{name} : {phone_number}')
+        # names = list(phone_data.keys())
+        # result_names = filter(does_include_term, names)
+
+        # print(list(result_names))
+        # # def search_by_value(term):
+
+        return sorted(result_list)
