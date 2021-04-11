@@ -1,10 +1,13 @@
 import json
+import re
+
+DATA_URL = 'data.json'
 
 class Model():
     def __init__(self):
         pass
     def search(self, search_term):
-        with open('data.json', 'r', encoding='utf-8') as f:
+        with open(DATA_URL, 'r', encoding='utf-8') as f:
             phone_data = json.load(f)
             # print(phone_data)
 
@@ -35,7 +38,23 @@ class Model():
         return sorted(result_list)
     
     def addPhoneInfo(self, name, phone_number):
-        with open('data.json', 'r', encoding='utf-8') as f:
+        if name == "" or phone_number == "":
+            print('please fill in the blank')
+            return
+        
+        phone_number = re.sub("-", "", phone_number)
+
+
+        def validNumber(number):
+            pattern = re.compile("\d+")
+            return pattern.match(number) is not None
+
+
+        if not validNumber(phone_number):
+            print('no hacking!', phone_number)
+            return
+
+        with open(DATA_URL, 'r', encoding='utf-8') as f:
             phone_data = json.load(f)
 
         print(name, phone_number)
@@ -45,5 +64,5 @@ class Model():
         else:
             phone_data[name] = [phone_number]
 
-        with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(phone_data, f)
+        with open(DATA_URL, 'w', encoding='utf-8') as f:
+            json.dump(phone_data, f, ensure_ascii=False)

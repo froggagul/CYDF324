@@ -49,21 +49,21 @@ class ViewPanel():
             self.framePanel2.pack()
         
         self.phoneNameLabel = Tk.Label(self.framePanel2, text="이름")
-        self.phoneNameLabel.pack(side='bottom')
+        self.phoneNameLabel.pack()
 
         self.phone_name = Tk.StringVar()
         self.entryPhoneName = Tk.Entry(self.framePanel2, textvariable=self.phone_name)
-        self.entryPhoneName.pack(side='bottom')
+        self.entryPhoneName.pack()
 
         self.phoneNumberLabel = Tk.Label(self.framePanel2, text="전화번호")
-        self.phoneNumberLabel.pack(side='bottom')
+        self.phoneNumberLabel.pack()
 
         self.phone_number = Tk.StringVar()
         self.entryPhoneNumber = Tk.Entry(self.framePanel2, textvariable=self.phone_number)
-        self.entryPhoneNumber.pack(side='bottom')
+        self.entryPhoneNumber.pack()
 
         self.phoneAddButton = Tk.Button(self.framePanel2, text="추가하기")
-        self.phoneAddButton.pack(side='bottom')
+        self.phoneAddButton.pack()
         # Event handlers passes events to controller
         self.phoneAddButton.bind("<Button>", self.controller.addPhoneInfo) # <- add phone info
 
